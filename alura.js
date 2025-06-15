@@ -1,2 +1,67 @@
-// nd q já nn exista em outros repos :P
-_0x4e67(_0x3ead77,_0x3d88a8){const _0x1070b9=_0x1070();return _0x4e67=function(_0x4e676e,_0x51b079){_0x4e676e=_0x4e676e-0x106;let _0x360f4f=_0x1070b9[_0x4e676e];return _0x360f4f;},_0x4e67(_0x3ead77,_0x3d88a8);}function _0x1070(){const _0x3bc042=['4905439MJmSrM','sortBlocksOrigin','42832KfEZqv','getElementById','application/json','49930JLfwWz','li[data-correct=\x22true\x22]\x20input[type=\x22checkbox\x22]','location','transcription','querySelectorAll','length','57056xHbrVx','stringify','https://github.com/undefined/','/linksubmit/answer','textContent','submitBlocks','forEach','.block','startsWith','12Raiaat','project-link','.alternativeList','querySelector','form[data-gtm-form-interact-id=\x220\x22]','trim','.alternativeList-item[data-correct=\x22true\x22]\x20input[type=\x22radio\x22]','4335780otuzkL','14KWGBZo','https://cursos.alura.com.br/course/','task-actions-button','checked','1812726GpUEyz','a.task-actions-button-next','11743250gCJOtO','click','getElementsByClassName','.task-body-header-title\x20small','99vjMMTc','bootcamp-next-button'];_0x1070=function(){return _0x3bc042;};return _0x1070();}
+(function () {
+  'use strict';
+
+  const headerInfo = document.querySelector("small.task-body-header-title");
+  if (headerInfo) {
+    const msg = atob(
+      "dmFvIHNlIGZ1ZGVyZW0gfCBtYWRlIGJ5IG1hcmNvczEwcGMgfCBkaXNjb3JkLmdnL3BsYXRmb3JtZGVzdHJveWVyIHwgc2Ugdm9jw6ogcGFnb3UgcG9yIGlzc28sIGZvaSBzY2FtbWFkbw=="
+    );
+    headerInfo.textContent = msg;
+  }
+
+  const currentUrl = window.location.href;
+  const urlParts = currentUrl.split('/');
+  const courseId = urlParts[4];
+  const taskId = urlParts[6];
+
+  const projectButton = document.querySelector(".project-link");
+  const projectHref = projectButton?.getAttribute("href") || "";
+  const projectId = projectHref.startsWith('/') ? projectHref.slice(1) : projectHref;
+
+  document.getElementById("submitBlocks")?.click();
+
+  const correctCheckboxes = document.querySelectorAll('li[data-correct="true"] input[type="checkbox"]');
+  correctCheckboxes.forEach(input => {
+    if (!input.checked) input.click();
+  });
+
+  const correctRadios = document.querySelectorAll('.alternativeList-item[data-correct="true"] input[type="radio"]');
+  correctRadios.forEach(input => input.click());
+
+  document.querySelector(".bootcamp-next-button")?.click();
+
+  const taskButton = document.querySelector(".task-actions-button");
+  if (taskButton) {
+    const correctInputs = taskButton.querySelectorAll('input[type="checkbox"]');
+    correctInputs.forEach(input => {
+      if (!input.checked) input.click();
+    });
+  }
+
+  const taskActions = document.getElementsByClassName("task-actions-button-next")[0];
+  if (taskActions) {
+    setTimeout(() => taskActions.click(), 5000);
+  }
+
+  if (currentUrl.includes("/linksubmit")) {
+    const submitUrl = `https://cursos.alura.com.br/course/${courseId}/section/${projectId}/linksubmit/answer`;
+
+    const body = {
+      taskId: Number(taskId),
+      alternatives: [],
+      linkUrl: "https://github.com/undefined/" // Link fake (placeholder)
+    };
+
+    fetch(submitUrl, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify(body)
+    });
+
+    alert("Uh, Infelizmente no momento o alura destroyer não envia link de projetos, você está sozinho nessa lil bro 💀\n\n(um link em branco foi enviado no lugar para manter a porcentagem de 100%)");
+  }
+
+})();
